@@ -10,6 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgrossi <lgrossi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/03 15:17:55 by lgrossi           #+#    #+#             */
+/*   Updated: 2023/05/03 18:22:35 by lgrossi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "get_next_line.h"
 #include <stdio.h>
 #include <fcntl.h>
@@ -26,22 +39,19 @@ char	*gnl_breaker(char	*final, char	*buff)
 
 	j = 0;
 	nl = NULL;
-	i = 0;	
+	i = 0;
 	if (final != NULL)//								FINAL GIA ESISTE.. CONCATENAZIONE
 	{
 		if ((nl = strchr(buff,'\n')))//									SE FINAL ESISTE E BUFF CONTIENE nl
 			size = strlen(final) + (nl - buff + 1);
 		else//															SE FINAL ESISTE MA BUFF NON CONTIENE NL
 			size = strlen(final) + strlen (buff);
-		new = calloc(size + 1, 1);
+ 		new = calloc(size + 1, 1);
 		if (!new)
 			return (NULL);
-		if (final != NULL)
-		{
-			while (final[j] != 0)
+		while (final[j] != 0)
 				new[i++] = final[j++];
 			j = 0;
-		}
 		while (buff[j] != 0 && buff[j] != '\n')
 			new[i++] = buff[j++];
 		if (buff[j] == '\n')
@@ -56,40 +66,43 @@ char	*gnl_breaker(char	*final, char	*buff)
 			size = strlen (buff);
 		new = calloc (size + 1, 1);
 		while (buff[j] != 0 && buff[j] != '\n')
-			new[i++] = buff[j++];
+   			new[i++] = buff[j++];
 		if (buff[j] == '\n')
 			new[i++] = buff[j++];
 	}
 	return (new);
 }
 
+
 char	*get_next_line(int fd)
 {
 	char		*final;
 	char		*buff;
-	static char	*remind;
+	static char	*remind = NULL;
 	int			len_read;
 	char		*nl;
-	
+	size_t		x;
+
 	buff = calloc(BUFFER_SIZE +1, 1);
-	remind = NULL;
 	if (!buff)
 		return (NULL);
 	final = NULL;
-	
-	if (remind)
+
+	if (remind && *remind)
 	{
 		if ((nl = strchr(remind,'\n')))
 		{
 			final = gnl_breaker(final,remind);
-			remind = nl++;
+			nl++;
+			x = nl - remind;
+			remind += x;
 			return (final);
 		}
 		else
 		{
 			final = gnl_breaker(final,remind);
 			remind = &remind[0];
-			free (remind);
+			remind = "";
 		}
 	}
 	while ((len_read = read(fd, buff, BUFFER_SIZE)) > 0)
@@ -97,8 +110,9 @@ char	*get_next_line(int fd)
 		if ((nl = strchr(buff,'\n')))
 		{
 			final = gnl_breaker(final, buff);
-			if (*nl++)
-				remind = gnl_breaker(remind,&buff[nl - buff]);
+			nl++;
+			if (nl[0])
+				remind = strdup(&buff[nl - buff]);
 			free (buff);
 			return (final);
 		}
@@ -106,33 +120,12 @@ char	*get_next_line(int fd)
 			final = gnl_breaker(final, buff);
 		memset(buff, 0, BUFFER_SIZE);
 	}
-	free (buff);
-	if (remind != NULL)
-		free (remind);
+	if (buff)
+		free (buff);
+	//if (remind)
+	//	free (remind);
 	if (final)
 		return (final);
 	else
 		return (NULL);
 }
-
-/*int main()
-{
-    int fd;
-    char *line;
-
-    fd = open("43_no_nl", O_RDONLY);
-    if (fd < 0)
-    {
-        perror("open");
-        return (1);
-    }
-
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        printf("%s\n", line);
-        free(line);
-    }
-
-    close(fd);
-    return (0);
-}*/

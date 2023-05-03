@@ -84,6 +84,7 @@ char	*get_next_line(int fd)
 			nl++;
 			x = nl - remind;
 			remind += x;
+			free (buff);
 			return (final);
 		}
 		else
@@ -110,8 +111,6 @@ char	*get_next_line(int fd)
 	}
 	if (buff)
 		free (buff);
-	//if (remind)
-	//	free (remind);
 	if (final)
 		return (final);
 	else

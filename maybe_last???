@@ -1,0 +1,106 @@
+#include "get_next_line.h"
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*str;
+	int		bytes;
+
+	if (count + size < count || count + size < size)
+		return (NULL);
+	bytes = (count * size);
+	str = malloc(count * size);
+	if (!str)
+		return (0);
+	while (bytes--)
+		((char *)str)[bytes] = 0;
+	return (str);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if ((s[i]) == (char) c)
+			return ((char *)(s + i));
+	i++;
+	}
+	if (s[i] == (char)c)
+		return ((char *)(s + i));
+	return (NULL);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*s2;
+	int		len;
+
+	len = ft_strlen(s1);
+	s2 = (char *) ft_calloc(len + 1, 1);
+	if (!s2)
+		return (NULL);
+	ft_strcpy(s2, s1);
+	return (s2);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+void	ft_strcpy(char *dst, const char *src)
+{
+	size_t	i;
+
+	i = 0;
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+}
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	len;
+	char	*s;
+
+	if (!s1 || !s2)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	s = (char *)calloc(len + 1, 1);
+	if (!s)
+		return (NULL);
+	ft_strcpy(s, s1);
+	ft_strlcat(s, s2, len + 1);
+	return (s);
+}
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
+{
+	size_t	dst_len;
+	size_t	src_len;
+	size_t	i;
+
+	if (size == 0 && (!src || !dst))
+		return (0);
+	dst_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	if (size == 0)
+		return (src_len);
+	if (size <= dst_len)
+		return (src_len + size);
+	i = 0;
+	while (src[i] && dst_len + i + 1 < size)
+	{
+		dst[dst_len + i] = src[i];
+		i++;
+	}
+	dst[dst_len + i] = '\0';
+	return (dst_len + src_len);
+}

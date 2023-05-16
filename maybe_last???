@@ -46,7 +46,7 @@ void	get_reminded(char	*remind)
 	if (remind[i])
 	{
 		tmp = remind;
-		remind = ft_calloc(ft_strlen(&remind[i]) + 1, 1);
+		remind = ft_calloc(ft_strlen(&tmp[i]) + 1, 1);
 		ft_strcpy(remind, &tmp[i]);
 		free (tmp);
 	}

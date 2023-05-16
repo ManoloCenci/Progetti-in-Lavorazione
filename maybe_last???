@@ -86,7 +86,7 @@ int	get_buffed (char	*final, char	*remind, int	fd)
 	else
 		return (-1);
 }
-char	*get_next_line(int fd)
+char *get_next_line(int fd)
 {
 	char		*final;
 	static char	*remind;
@@ -95,6 +95,8 @@ char	*get_next_line(int fd)
 	remind = NULL;
 	if (remind != NULL)
 	{
+		if (remind[0])
+			gnl_breaker(final, remind);
 		get_reminded(remind);
 		return (final);
 	}

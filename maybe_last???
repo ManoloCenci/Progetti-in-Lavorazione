@@ -16,7 +16,7 @@ char	*gnl_breaker(char	*final, char	*buff)
 	while (final[i] && final != NULL)
 		i++;
 	while (buff[j] && buff[j] != '\n')
-		i++;
+		j++;
 	if (buff[j] == '\n')
 		j++;
 	new = calloc (i + j + 1 , 1);
@@ -24,7 +24,6 @@ char	*gnl_breaker(char	*final, char	*buff)
 		return (NULL);
 	if (final != NULL)
 		ft_strcpy(new, final);
-	i = 0;
 	j = 0;
 	while (buff[j] && buff[j] != '\n')
 		new[i++] = buff[j++];
@@ -48,12 +47,14 @@ void	get_reminded(char	*remind)
 	{
 		tmp = remind;
 		remind = ft_calloc(ft_strlen(&remind[i]) + 1, 1);
-		ft_strcpy(remind, &remind[i]);
+		ft_strcpy(remind, &tmp[i]);
 		free (tmp);
 	}
 	else
+	{
 		free (remind);
 		remind = NULL;
+	}
 }
 int	get_buffed (char	*final, char	*remind, int	fd)
 {

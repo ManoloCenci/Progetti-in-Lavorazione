@@ -1,3 +1,4 @@
+
 #include "get_next_line.h"
 #include <stdio.h>
 #include <fcntl.h>
@@ -36,6 +37,7 @@ char	*gnl_breaker(char	*final, char	*buff)
 		free (tmp);
 	return (new);
 }
+
 void	get_reminded(char **remind)
 {
 	char	*tmp;
@@ -69,6 +71,8 @@ int	get_buffed(char **final, char **remind, int fd)
 	char	*nl;
 
 	buff = ft_calloc (BUFFER_SIZE + 1, 1);
+	if (!buff)
+		return (-1);
 	while ((len_read = read (fd, buff, BUFFER_SIZE)) > 0)
 	{
 		if (ft_strchr(buff, '\n'))
@@ -76,8 +80,6 @@ int	get_buffed(char **final, char **remind, int fd)
 			*final = gnl_breaker(*final, buff);
 			nl = ft_strchr(buff, '\n');
 			nl++;
-			if (*remind != NULL)
-				buff++;
 			if (nl[0])
 				*remind = ft_strdup(nl);
 			if (buff)
@@ -110,16 +112,24 @@ char	*get_next_line(int fd)
 	{
 		final = gnl_breaker(final, remind);
 		get_reminded(&remind);
-		if (ft_strchr(remind, '\n'))
-		{
+		if (ft_strchr(final, '\n'))
 			return (final);
-		}
 	}
 	if (get_buffed(&final, &remind, fd) > 0 || final != NULL )
 		return (final);
 	else
-	{
-		free (final);
 		return (NULL);
-	}
 }
+
+// int main()
+// {
+// 	int fd = open("alternate_line_nl_no_nl", O_RDONLY);
+// 	char *line;
+// 	while ((line = get_next_line(fd)))
+// 	{
+// 	printf("%s\n", line);
+// 	free(line);
+// 	}
+// 	free(line);
+// 	close(fd);
+// }

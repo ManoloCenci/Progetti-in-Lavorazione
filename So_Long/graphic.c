@@ -6,7 +6,7 @@
 /*   By: mcenci <mcenci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:16:39 by mcenci            #+#    #+#             */
-/*   Updated: 2023/07/16 18:17:36 by mcenci           ###   ########.fr       */
+/*   Updated: 2023/07/20 16:45:32 by mcenci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,21 @@ void	create_win(game *img)
 		i++;
 	img->mlx = mlx_init();
 	img->window = mlx_new_window(img->mlx, \
-	(64 * ft_strlen(img->map_mtx[0])), (64 * (i) + 64), "so_long");
+	(64 * ft_strlen(img->map_mtx[0])), (64 * (i - 1) + 64), "so_long");
 	mlx_hook(img->window, 17, 0, quit, 0);
 }
 
 void	assign_img(game *img)
 {
-	img->wall = mlx_xpm_file_to_image(img->mlx, "./images/Wall.xpm", \
+	img->wall = mlx_xpm_file_to_image(img->mlx, "./images/Dioca.xpm", \
 	&img->size, &img->size);
 	img->collector = mlx_xpm_file_to_image(img->mlx, "./images/Collection.xpm", \
 	&img->size, &img->size);
-	img->hero = mlx_xpm_file_to_image(img->mlx, "./images/P.xpm", \
+	img->hero = mlx_xpm_file_to_image(img->mlx, "./images/Right_P.xpm", \
 	&img->size, &img->size);
 	img->out = mlx_xpm_file_to_image(img->mlx, "./images/Out.xpm", \
 	&img->size, &img->size);
-	img->empty = mlx_xpm_file_to_image(img->mlx, "./images/daje.xpm", \
+	img->empty = mlx_xpm_file_to_image(img->mlx, "./images/Prova1.xpm", \
 	&img->size, &img->size);
 	img->enemy = mlx_xpm_file_to_image(img->mlx, "./images/Enemy.xpm", \
 	&img->size, &img->size);

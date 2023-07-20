@@ -6,7 +6,7 @@
 /*   By: mcenci <mcenci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 10:35:59 by mcenci            #+#    #+#             */
-/*   Updated: 2023/07/16 17:09:05 by mcenci           ###   ########.fr       */
+/*   Updated: 2023/07/20 19:32:04 by mcenci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	get_map(char *argv, game *m)
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_printf("Error, your file is empty");
+		ft_printf("Errore, non esiste o é vuoto!");
 		exit(1);
 	}
 	m->map = malloc(1);
@@ -31,9 +31,9 @@ void	get_map(char *argv, game *m)
 		if (!str)
 			break ;
 		m->map = ft_strjoin(m->map, str);
-		free(ft_strjoin(m->map, str));
 		free(str);
 	}
+	free(str);
 	m->map_mtx = ft_split(m->map, '\n');
 	close(fd);
 	get_hero(m);

@@ -6,7 +6,7 @@
 /*   By: mcenci <mcenci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 10:35:01 by mcenci            #+#    #+#             */
-/*   Updated: 2023/07/16 13:10:33 by mcenci           ###   ########.fr       */
+/*   Updated: 2023/07/20 19:30:18 by mcenci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int	check_ext(char *name)
 	i = ft_strlen(name);
 	if (i < 5 || (x != 1))
 		return (0);
-	else if ((name[i - 1] != 'r') && (name[i - 2] != 'e') \
-		&& (name[i - 3] != 'b') && (name[i - 4] != '.'))
+	else if ((name[i - 1] != 'r') || (name[i - 2] != 'e') \
+		|| (name[i - 3] != 'b') || (name[i - 4] != '.'))
 		return (0);
 	return (1);
 }
@@ -99,11 +99,11 @@ int	supreme_check(game *map, char *name)
 		ft_printf("Errore, la tua mappa non é chiusa da muri!");
 		exit(1);
 	}
-	else if (!check_correct_comp(map) || !check_pce(map))
-	{
-		ft_printf("I componenti della tua mappa non sono corretti!");
-		exit(1);
-	}
+	 else if (!check_pce(map))
+	 {
+	 	ft_printf("Ti manca uno fra P, C o E!");
+	 	exit(1);
+	 }
 	else
 		return (1);
 }

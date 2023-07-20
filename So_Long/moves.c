@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcenci <mcenci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/15 15:04:06 by dmarcian          #+#    #+#             */
-/*   Updated: 2023/07/16 17:05:37 by mcenci           ###   ########.fr       */
+/*   Created: 2023/07/20 15:40:59 by mcenci            #+#    #+#             */
+/*   Updated: 2023/07/20 17:57:31 by mcenci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ void move_up(game *m)
 		m->map_mtx[m->hi - 1][m->hj] = 'P';
 		m->map_mtx[m->hi][m->hj] = '0';
 	}
-	else if ((m->map_mtx[m->hi - 1][m->hj] == 'E' || \
-			m->map_mtx[m->hi - 1][m->hj] == 'P') && m->colect == 0)
+	else if (m->map_mtx[m->hi - 1][m->hj] == 'E' && m->colect == 0)
+		exit(1);
+	else if (m->map_mtx[m->hi - 1][m->hj] == 'N')
 		exit(1);
 	supreme_put_image(m);
 }
@@ -42,8 +43,9 @@ void move_down(game *m)
 		m->map_mtx[m->hi + 1][m->hj] = 'P';
 		m->map_mtx[m->hi][m->hj] = '0';
 	}
-	else if ((m->map_mtx[m->hi + 1][m->hj] == 'E' || \
-			m->map_mtx[m->hi + 1][m->hj] == 'P') && m->colect == 0)
+	else if (m->map_mtx[m->hi + 1][m->hj] == 'E' && m->colect == 0)
+		exit(1);
+	else if (m->map_mtx[m->hi + 1][m->hj] == 'N')
 		exit(1);
 	supreme_put_image(m);
 }
@@ -60,8 +62,9 @@ void move_right(game *m)
 		m->map_mtx[m->hi][m->hj + 1] = 'P';
 		m->map_mtx[m->hi][m->hj] = '0';
 	}
-	else if ((m->map_mtx[m->hi][m->hj + 1] == 'E' || \
-			m->map_mtx[m->hi][m->hj + 1] == 'P') && m->colect == 0)
+	else if (m->map_mtx[m->hi][m->hj + 1] == 'E' && m->colect == 0)
+		exit(1);
+	else if (m->map_mtx[m->hi][m->hj + 1] == 'N')
 		exit(1);
 	supreme_put_image(m);
 }
@@ -78,8 +81,9 @@ void move_left(game *m)
 		m->map_mtx[m->hi][m->hj - 1] = 'P';
 		m->map_mtx[m->hi][m->hj] = '0';
 	}
-	else if ((m->map_mtx[m->hi][m->hj - 1] == 'E' || \
-			m->map_mtx[m->hi][m->hj - 1] == 'P') && m->colect == 0)
+	else if (m->map_mtx[m->hi][m->hj - 1] == 'E' && m->colect == 0)
+		exit(1);
+	else if (m->map_mtx[m->hi][m->hj - 1] == 'N')
 		exit(1);
 	supreme_put_image(m);
 }
@@ -95,7 +99,8 @@ int movement(int m, game *mtx)
 	else if (m == s || m == fg)
 	{
 		move_down(mtx);
-		move_up_enemy(mtx);
+		if (mtx->N_count != 0)
+			move_up_enemy(mtx);
 	}
 	else if (m == d || m == fd)
 	{

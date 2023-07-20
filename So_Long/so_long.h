@@ -6,7 +6,7 @@
 /*   By: mcenci <mcenci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:58:32 by mcenci            #+#    #+#             */
-/*   Updated: 2023/07/16 16:56:11 by mcenci           ###   ########.fr       */
+/*   Updated: 2023/07/20 18:29:48 by mcenci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct t_img
     int ei;
     int ej;
     int colect;
-
+    int N_count;
 } game;
 
 typedef enum tast {

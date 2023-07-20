@@ -6,7 +6,7 @@
 /*   By: mcenci <mcenci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 10:31:16 by mcenci            #+#    #+#             */
-/*   Updated: 2023/07/16 13:05:23 by mcenci           ###   ########.fr       */
+/*   Updated: 2023/07/20 18:40:04 by mcenci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,26 @@ int	check_wall_rows(game *map)
 	return (1);
 }
 
+// int	check_correct_comp(game *map)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (map->map[i])
+// 	{
+// 		if (map->map[i] != 'P' && map->map[i] != 'C' && \
+// 			map->map[i] != 'E' && map->map[i] != 'N' && \
+// 			map->map[i] != '1' && map->map[i] != '0' && \
+// 			map->map[i] != '\n')
+// 			// {
+// 				// ft_printf("I componenti della tua mappa non sono corretti!");
+// 				// exit(1);
+// 				return(0);
+// 			// }
+// 		i++;
+// 	}
+// 	return (1);
+// }
 int	check_correct_comp(game *map)
 {
 	int	i;
@@ -53,12 +73,16 @@ int	check_correct_comp(game *map)
 	j = 0;
 	while (map->map_mtx[i] != NULL)
 	{
-		while (!map->map_mtx[i][j])
+		while (map->map_mtx[i][j])
 		{
-			if (map->map_mtx[i][j] != 'P' || map->map_mtx[i][j] != 'C' || \
-				map->map_mtx[i][j] != 'E' || map->map_mtx[i][j] != 'N' || \
-				map->map_mtx[i][j] != '1' || map->map_mtx[i][j] != '0')
-				return (0);
+			if (map->map_mtx[i][j] != 'P' && map->map_mtx[i][j] != 'C' && \
+				map->map_mtx[i][j] != 'E' && map->map_mtx[i][j] != 'N' && \
+				map->map_mtx[i][j] != '1' && map->map_mtx[i][j] != '0' && \
+				map->map_mtx[i][j] != '\n')
+				{
+					ft_printf("Puoi usare solo P, C, E, N, 0 o 1");
+					exit(1);
+				}
 			j++;
 		}
 		j = 0;
